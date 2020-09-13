@@ -28,7 +28,7 @@ public class TitleScreenSprite extends Geometry {
 	private Node labelNode;
 	
 	public enum Type {
-		SOLO, MULTIPLAYER, CONFIG, SPRITE;
+		SOLO, MULTIPLAYER, CONFIG, SPRITE, QUIT;
 	}
 
 	public TitleScreenSprite(Type type, String image, float x, float y, float sizeX, float sizeY, TitleScreenSprite label, Node labelNode) {

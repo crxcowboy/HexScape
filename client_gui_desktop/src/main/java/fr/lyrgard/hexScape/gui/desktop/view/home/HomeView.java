@@ -6,8 +6,6 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.concurrent.Callable;
 
-
-
 import com.google.common.eventbus.Subscribe;
 
 import fr.lyrgard.hexScape.HexScapeCore;
@@ -18,16 +16,14 @@ import fr.lyrgard.hexScape.gui.desktop.action.ConnectToServerAction;
 import fr.lyrgard.hexScape.gui.desktop.action.JoinGameAction;
 import fr.lyrgard.hexScape.gui.desktop.action.OpenConfigDialogAction;
 import fr.lyrgard.hexScape.gui.desktop.action.OpenNewGameDialogAction;
-//import fr.lyrgard.hexScape.gui.desktop.action.ConnectToServerAction;
-//import fr.lyrgard.hexScape.gui.desktop.action.OpenConfigDialogAction;
-//import fr.lyrgard.hexScape.gui.desktop.action.OpenNewGameDialogAction;
 import fr.lyrgard.hexScape.gui.desktop.view.AbstractView;
+import fr.lyrgard.hexScape.message.DisconnectFromServerMessage;
 import fr.lyrgard.hexScape.message.GameCreatedMessage;
 import fr.lyrgard.hexScape.message.GameJoinedMessage;
 import fr.lyrgard.hexScape.message.StartGameMessage;
-import fr.lyrgard.hexScape.model.TitleScreenSprite.Type;
 import fr.lyrgard.hexScape.model.CurrentUserInfo;
 import fr.lyrgard.hexScape.model.TitleScreenButtonClicked;
+import fr.lyrgard.hexScape.model.TitleScreenSprite.Type;
 
 public class HomeView extends AbstractView {
 
@@ -90,6 +86,15 @@ public class HomeView extends AbstractView {
 
 				public void run() {
 					new OpenConfigDialogAction(getTopLevelAncestor()).actionPerformed(null);
+				}
+			});
+			break;
+		case QUIT:
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+		        	DisconnectFromServerMessage disconnectMessage = new DisconnectFromServerMessage();
+		        	CoreMessageBus.post(disconnectMessage);
+		        	System.exit(1);
 				}
 			});
 			break;
